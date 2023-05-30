@@ -77,6 +77,7 @@
             this.txtId.Size = new System.Drawing.Size(190, 34);
             this.txtId.TabIndex = 2;
             this.txtId.Text = "";
+       
             // 
             // btnView
             // 

@@ -16,21 +16,21 @@ namespace EmployeeApplication_WinForm
     public static class RestApicall
     {
         public static readonly string baseurl = "https://gorest.co.in/public/v2/users";
-        public static readonly string acesstoken = "8771545378d8dd641b3d03bc7708639d971de73524825367537fcc236c79b8fe";
+        
         public static string EmpJson(string jsonStr)
         {
             JToken json = JToken.Parse(jsonStr);
             return json.ToString(Newtonsoft.Json.Formatting.Indented);
-
-        }
+            
+    }
 
         //[HttpGet]
         public static async Task<string>GetAll()
         {
             using (HttpClient client=new HttpClient())
             {
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", acesstoken);
-                using (HttpResponseMessage res=await client.GetAsync(baseurl+ ""))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",JWTToken.acesstoken);
+                using (HttpResponseMessage res=await client.GetAsync(baseurl+ "?page=1&per_page=20"))
                 {
                     using (HttpContent content = res.Content)
                     {
@@ -52,7 +52,7 @@ namespace EmployeeApplication_WinForm
         {
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
                 using (HttpResponseMessage res = await client.GetAsync(baseurl + "?id=" + id))
                 {
                     using (HttpContent content = res.Content)
@@ -83,7 +83,7 @@ namespace EmployeeApplication_WinForm
                 using (HttpClient client = new HttpClient())
                 {
                
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
                     using (HttpResponseMessage res = await client.PostAsync(baseurl + "" ,input))
                     {
                         using (HttpContent content = res.Content)
@@ -103,6 +103,7 @@ namespace EmployeeApplication_WinForm
         {
             var inputdata = new Dictionary<string, string>
                 {
+                    {"id",id },
                     {"name",name},
                     {"email",email},
                     {"gender",gender},
@@ -114,7 +115,7 @@ namespace EmployeeApplication_WinForm
             using (HttpClient client = new HttpClient())
             {
                 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
                 using (HttpResponseMessage res = await client.PutAsync(baseurl + "/" + id, input))
                 {
                     using (HttpContent content = res.Content)
@@ -135,7 +136,7 @@ namespace EmployeeApplication_WinForm
             using (HttpClient client = new HttpClient())
             {
               
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
                 using (HttpResponseMessage res = await client.DeleteAsync(baseurl + "/" + id))
                 {
                     using (HttpContent content = res.Content)
