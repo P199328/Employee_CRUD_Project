@@ -60,12 +60,16 @@ namespace EmployeeApplication_WinForm
                         string data = await content.ReadAsStringAsync();
                         if (data != null)
                         {
-                            return data;
+                            
+                                return data;
+                           
                         }
+                       
                     }
+                    return string.Empty;
+
                 }
             }
-            return string.Empty;
         }
         //[HttpPost]
             public static async Task<String>AddEmployee(string name, string email, string gender, string status)

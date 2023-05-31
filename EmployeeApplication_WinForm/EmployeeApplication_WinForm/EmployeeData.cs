@@ -45,6 +45,11 @@ namespace EmployeeApplication_WinForm
             {
                 var response = await RestApicall.GetById(txtId.Text);
                 txtView.Text = RestApicall.EmpJson(response);
+                if (txtView.Text =="[]")
+                {
+                    MessageBox.Show("No Data is Available For ID " + txtId.Text);
+                }
+               
 
             }
             else
