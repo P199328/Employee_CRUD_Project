@@ -16,7 +16,7 @@ namespace EmployeeApplication_WinForm
     public static class RestApicall
     {
         public static readonly string baseurl = "https://gorest.co.in/public/v2/users";
-        
+        static readonly JWTToken jtoken = new JWTToken();
         public static string EmpJson(string jsonStr)
         {
             JToken json = JToken.Parse(jsonStr);
@@ -29,7 +29,7 @@ namespace EmployeeApplication_WinForm
         {
             using (HttpClient client=new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",JWTToken.acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jtoken.BearerToken);
                 using (HttpResponseMessage res=await client.GetAsync(baseurl+ "?page=1&per_page=20"))
                 {
                     using (HttpContent content = res.Content)
@@ -52,7 +52,7 @@ namespace EmployeeApplication_WinForm
         {
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jtoken.BearerToken);
                 using (HttpResponseMessage res = await client.GetAsync(baseurl + "?id=" + id))
                 {
                     using (HttpContent content = res.Content)
@@ -87,7 +87,7 @@ namespace EmployeeApplication_WinForm
                 using (HttpClient client = new HttpClient())
                 {
                
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jtoken.BearerToken);
                     using (HttpResponseMessage res = await client.PostAsync(baseurl + "" ,input))
                     {
                         using (HttpContent content = res.Content)
@@ -119,7 +119,7 @@ namespace EmployeeApplication_WinForm
             using (HttpClient client = new HttpClient())
             {
                 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jtoken.BearerToken);
                 using (HttpResponseMessage res = await client.PutAsync(baseurl + "/" + id, input))
                 {
                     using (HttpContent content = res.Content)
@@ -140,7 +140,7 @@ namespace EmployeeApplication_WinForm
             using (HttpClient client = new HttpClient())
             {
               
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWTToken.acesstoken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jtoken.BearerToken);
                 using (HttpResponseMessage res = await client.DeleteAsync(baseurl + "/" + id))
                 {
                     using (HttpContent content = res.Content)
